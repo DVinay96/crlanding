@@ -6,11 +6,15 @@ import { ChevronRight } from 'lucide-react';
 
 const StyledHeroSection = styled.section`
   position: relative;
-  height: 80vh;
+  height: 90vh;
   min-height: 600px;
   padding-top: 125px;
   background-color: ${(props) => props.theme.colors.primary.dark};
   color: ${(props) => props.theme.colors.white};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+    height: 100vh;
+  }
 `;
 
 const HeroBackground = styled.div`
