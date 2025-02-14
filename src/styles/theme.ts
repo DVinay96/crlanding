@@ -1,4 +1,8 @@
+import { Protest_Strike, Carlito } from 'next/font/google';
 import { DefaultTheme } from 'styled-components';
+
+const protestStrike = Protest_Strike({ subsets: ['latin'], weight: '400' });
+const carlito = Carlito({ subsets: ['latin'], weight: '400' });
 
 const theme: DefaultTheme = {
   colors: {
@@ -36,9 +40,13 @@ const theme: DefaultTheme = {
     padding: '1rem',
     maxWidth: '1280px',
   },
+  section: {
+    padding: '2rem 0',
+  },
   font: {
     family: {
-      body: 'system-ui, sans-serif',
+      body: carlito.style.fontFamily,
+      heading: protestStrike.style.fontFamily,
     },
     size: {
       xs: '0.75rem',

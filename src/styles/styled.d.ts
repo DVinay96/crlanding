@@ -40,6 +40,7 @@ declare module 'styled-components' {
     font: {
       family: {
         body: string;
+        heading: string;
       };
       size: {
         xs: string;
