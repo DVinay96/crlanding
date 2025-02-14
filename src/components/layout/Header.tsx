@@ -34,7 +34,7 @@ const Header = () => {
         <Container>
           <MainHeaderContent>
             <Image
-              src={'/images/logocrd.png'}
+              src={'/images/logo.svg'}
               alt="Autosoe Logo"
               width={150} // Set appropriate width
               height={40} // Set appropriate height
@@ -45,7 +45,7 @@ const Header = () => {
 
             <Navigation isOpen={isOpen}>
               <LogoNav
-                src={'/images/logocrd.png'}
+                src={'/images/logo.svg'}
                 alt="Autosoe Logo"
                 width={150} // Set appropriate width
                 height={40} // Set appropriate height
