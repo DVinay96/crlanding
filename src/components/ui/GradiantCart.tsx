@@ -4,22 +4,22 @@ import styled from 'styled-components';
 interface Category {
   category: {
     id: number;
-    url: string;
+    file: string;
     title: string;
-    description: string;
+    subtitle: string;
   };
 }
 
 const GradientCard = (props: Category) => {
   const { category } = props;
-  const { url, title, description } = category;
+  const { file, title, subtitle } = category;
 
   return (
-    <CardContainer url={url}>
+    <CardContainer url={file}>
       <GradientOverlay />
       <CardContent>
         <h2>{title}</h2>
-        <p>{description}</p>
+        <p>{subtitle}</p>
       </CardContent>
     </CardContainer>
   );

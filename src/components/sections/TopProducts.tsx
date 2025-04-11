@@ -4,95 +4,106 @@ import Container from '../layout/Container';
 import Title from '../ui/Title';
 import CardProduct from '../ui/CardProduct';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
+interface Banner {
+  id: number;
+  file: string;
+  title: string;
+  subtitle: string;
+  color: string;
+  isXl: boolean;
+}
+
+interface TopProduct {
+  id: number;
+  name: string;
+  stars: number;
+  inStock: boolean;
+  price: number;
+  priceOld: number;
+  discount: number;
+  numberReviews: number;
+  file: string;
+}
+
+interface Text {
+  id: number;
+  name: string;
+  title: string;
+  subtitle: string;
+}
 
 const TopProducts = () => {
-  const products = [
-    {
-      id: 1,
-      name: 'Battery Jump Pack 12 Volt',
-      stars: 4,
-      inStock: true,
-      price: 200,
-      priceOld: 250,
-      discount: 20,
-      numberReviews: 10,
-      url: 'https://placehold.co/140x140',
-    },
-    {
-      id: 2,
-      name: 'Oil Change',
-      stars: 5,
-      inStock: true,
-      price: 50,
-      priceOld: 0,
-      discount: 0,
-      numberReviews: 10,
-      url: 'https://placehold.co/140x140',
-    },
-    {
-      id: 3,
-      name: 'A-Premium Front Catalytic Converter',
-      stars: 3,
-      inStock: true,
-      price: 100,
-      priceOld: 0,
-      discount: 0,
-      numberReviews: 10,
-      url: 'https://placehold.co/140x140',
-    },
-  ];
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [topProducts, setTopProducts] = useState<TopProduct[]>([]);
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [texts, setTexts] = useState<Text>({} as Text);
 
-  const images = [
-    {
-      id: 1,
-      url: 'https://placehold.co/140x140',
-      title: 'Battery Jump Pack 12 Volt',
-      description: 'Battery Jump Pack 12 Volt',
-      color: 'primary',
-      isXl: true,
-    },
-    {
-      id: 2,
-      url: 'https://placehold.co/140x140',
-      title: 'Oil Change',
-      description: 'Oil Change',
-      color: 'secondary',
-      isXl: false,
-    },
-    {
-      id: 3,
-      url: 'https://placehold.co/140x140',
-      title: 'A-Premium Front',
-      description: 'A-Premium Front Catalytic Converter',
-      color: 'grey',
-      isXl: false,
-    },
-  ];
+  useEffect(() => {
+    const fetchTopProducts = async () => {
+      try {
+        const response = await fetch(`${apiUrl}top-products`);
+        const data = await response.json();
+        setTopProducts(data.data);
+      } catch (error) {
+        console.error('Error fetching topProducts:', error);
+      }
+    };
+
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch(`${apiUrl}banners`);
+        const data = await response.json();
+        const newData = data.data.slice(1, 4).map((item: Banner, index: number) => ({
+          ...item,
+          color: index === 0 ? 'primary' : index === 1 ? 'secondary' : 'grey',
+          isXl: index === 0 ? true : false,
+        }));
+        setBanners(newData);
+      } catch (error) {
+        console.error('Error fetching banners:', error);
+      }
+    };
+
+    const fetchTexts = async () => {
+      try {
+        const response = await fetch(`${apiUrl}texts`);
+        const data = await response.json();
+        const newData = data.data.filter((item: Text) => item.name.includes('top'));
+        setTexts(newData[0]);
+      } catch (error) {
+        console.error('Error fetching texts:', error);
+      }
+    };
+
+    fetchTexts();
+    fetchBanners();
+    fetchTopProducts();
+    //eslint-disable-next-line
+  }, []);
 
   return (
-    <Section>
+    <Section id="top">
       <Container>
-        <Title
-          title="Weekly Top Selling Products"
-          subtitle="From a new set of tires to an oil change, alignment to brakes."
-        />
+        <Title title={texts.title} subtitle={texts.subtitle} />
         <Grid>
-          {products.map((product) => (
+          {topProducts.map((product) => (
             <CardProduct key={product.id} product={product} />
           ))}
         </Grid>
         <OffersGrid>
-          {images.map((image) => (
+          {banners.map((image) => (
             <OfferCard key={image.id} bg={image.color}>
               <Content>
                 <TitleStyled size={image.isXl ? 'xl' : 'lg'}>{image.title}</TitleStyled>
-                <Description size={image.isXl ? 'xl' : 'md'}>{image.description}</Description>
+                <Description size={image.isXl ? 'xl' : 'md'}>{image.subtitle}</Description>
                 {/* <ShopButton>
                   Shop now <ArrowRight />
                 </ShopButton> */}
               </Content>
               <StyledImage
-                src={image.url}
+                src={image.file}
                 alt={image.title}
                 width={image.isXl ? 350 : 150}
                 height={image.isXl ? 350 : 150}

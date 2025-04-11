@@ -1,24 +1,47 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Zap } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+interface Text {
+  id: number;
+  name: string;
+  title: string;
+  subtitle: string;
+}
 
 const Promotion = () => {
-  const promotionText = [
-    'Get 20% off on your first purchase',
-    'Free shipping on orders over $50',
-    'Get a free gift on orders over $100',
-  ];
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [texts, setTexts] = useState<string[]>([]);
+  console.log('🦙 ~ Promotion ~ texts:', texts);
+  useEffect(() => {
+    const fetchTexts = async () => {
+      try {
+        const response = await fetch(`${apiUrl}texts`);
+        const data = await response.json();
+        const newData = data.data
+          .filter((item: Text) => item.name.includes('Tira'))
+          .map((item: Text) => item.title);
+        setTexts(newData);
+      } catch (error) {
+        console.error('Error fetching texts:', error);
+      }
+    };
+
+    fetchTexts();
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <PromotionContainer>
       <Marquee>
         <MarqueeContent>
-          {promotionText.map((text, index) => (
+          {texts.map((text, index) => (
             <PromotionStyled key={index}>
               {text} <Zap fill="#FFF" size={40} />
             </PromotionStyled>
           ))}
-          {promotionText.map((text, index) => (
+          {texts.map((text, index) => (
             <PromotionStyled key={`dup-${index}`}>
               {text}
               <Zap fill="#FFF" size={40} />

@@ -13,7 +13,7 @@ interface CardProductProps {
     priceOld: number;
     discount: number;
     numberReviews: number;
-    url: string;
+    file: string;
   };
 }
 
@@ -22,19 +22,21 @@ const CardProduct = (props: CardProductProps) => {
   return (
     <CardStyled>
       <ImageContainer>
-        <Image src={product.url} alt={product.name} width={140} height={140} unoptimized />
+        <Image src={product.file} alt={product.name} width={140} height={140} unoptimized />
         {product.discount > 0 && <Discount>- {product.discount}%</Discount>}
       </ImageContainer>
       <div>
         <TitleBox>{product.name}</TitleBox>
         <Ranking>
           <Stars rating={product.stars} />
-          <div>({product.numberReviews})</div>
+          <div>({Math.floor(Math.random() * 100) + 1})</div>
           <span>{product.inStock ? 'In stock' : null}</span>
         </Ranking>
         <PriceBox>
           <Price>${product.price}</Price>
-          {product.priceOld > 0 && <Old>${product.priceOld}</Old>}
+          {product.discount > 0 && (
+            <Old>${(product.price / (1 - product.discount / 100)).toFixed(2)}</Old>
+          )}
         </PriceBox>
       </div>
     </CardStyled>

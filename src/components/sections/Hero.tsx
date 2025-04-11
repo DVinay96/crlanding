@@ -3,6 +3,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+interface Banner {
+  id: number;
+  file: string;
+  title: string;
+  subtitle: string;
+  color: string;
+  isXl: boolean;
+}
 
 const StyledHeroSection = styled.section`
   position: relative;
@@ -17,10 +27,10 @@ const StyledHeroSection = styled.section`
   }
 `;
 
-const HeroBackground = styled.div`
+const HeroBackground = styled.div<{ url: string }>`
   position: absolute;
   inset: 0;
-  background-image: url('/images/bg.jpg');
+  background-image: url(${(props) => props.url});
   background-size: cover;
   background-position: center;
 
@@ -113,13 +123,35 @@ const SearchButton = styled.button`
 `;
 
 const Hero = () => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [banner, setBanners] = useState<Banner>({} as Banner);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch(`${apiUrl}banners`);
+        const data = await response.json();
+        const newData = data.data.slice(0, 1).map((item: Banner) => ({
+          ...item,
+          color: 'primary',
+          isXl: true,
+        }));
+        setBanners(newData[0]);
+      } catch (error) {
+        console.error('Error fetching banners:', error);
+      }
+    };
+
+    fetchBanners();
+    //eslint-disable-next-line
+  }, []);
   return (
     <StyledHeroSection>
-      <HeroBackground />
+      <HeroBackground url={banner.file} />
       <Container>
         <HeroContent>
-          <h1>BEST WAY TO UPGRADE</h1>
-          <p>Find the perfect product for your vehicle every time.</p>
+          <h1>{banner.title}</h1>
+          <p>{banner.subtitle}</p>
         </HeroContent>
 
         <SearchForm>

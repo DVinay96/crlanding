@@ -3,113 +3,102 @@ import styled from 'styled-components';
 import Container from '../layout/Container';
 import Title from '../ui/Title';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
+interface Branch {
+  id: number;
+  name: string;
+  file: string;
+}
+
+interface Banner {
+  id: number;
+  file: string;
+  title: string;
+  subtitle: string;
+  color: string;
+  isXl: boolean;
+}
+
+interface Text {
+  id: number;
+  name: string;
+  title: string;
+  subtitle: string;
+}
 
 const Branchs = () => {
-  const branches = [
-    {
-      id: 1,
-      name: 'Audi',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 2,
-      name: 'BMW',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 3,
-      name: 'Mercedes Benz',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 4,
-      name: 'Volkswagen',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 5,
-      name: 'Volvo',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 6,
-      name: 'Toyota',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 7,
-      name: 'Audi',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 8,
-      name: 'BMW',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 9,
-      name: 'Mercedes Benz',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 10,
-      name: 'Volkswagen',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 11,
-      name: 'Volvo',
-      logo: 'https://placehold.co/140x140',
-    },
-    {
-      id: 12,
-      name: 'Toyota',
-      logo: 'https://placehold.co/140x140',
-    },
-  ];
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [texts, setTexts] = useState<Text>({} as Text);
 
-  const images = [
-    {
-      id: 1,
-      url: 'https://placehold.co/140x140',
-      title: 'Battery Jump Pack 12 Volt',
-      description: 'Battery Jump Pack 12 Volt',
-      color: 'primary',
-      isXl: true,
-    },
-    {
-      id: 2,
-      url: 'https://placehold.co/140x140',
-      title: 'Oil Change',
-      description: 'Oil Change',
-      color: 'secondary',
-      isXl: true,
-    },
-  ];
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const response = await fetch(`${apiUrl}brands`);
+        const data = await response.json();
+        setBranches(data.data);
+      } catch (error) {
+        console.error('Error fetching branches:', error);
+      }
+    };
+
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch(`${apiUrl}banners`);
+        const data = await response.json();
+        const newData = data.data.slice(3, -1).map((item: Banner, index: number) => ({
+          ...item,
+          color: index % 2 === 0 ? 'primary' : 'secondary',
+          isXl: true,
+        }));
+        setBanners(newData);
+      } catch (error) {
+        console.error('Error fetching banners:', error);
+      }
+    };
+
+    const fetchTexts = async () => {
+      try {
+        const response = await fetch(`${apiUrl}texts`);
+        const data = await response.json();
+        const newData = data.data.filter((item: Text) => item.name.includes('Marcas'));
+        setTexts(newData[0]);
+      } catch (error) {
+        console.error('Error fetching texts:', error);
+      }
+    };
+
+    fetchTexts();
+    fetchBanners();
+    fetchBranches();
+    //eslint-disable-next-line
+  }, []);
 
   return (
-    <Section>
+    <Section id="brands">
       <Container>
-        <Title title="Our Branchs" subtitle="We have branches in the following cities" />
+        <Title title={texts.title} subtitle={texts.subtitle} />
         <BranchesBox>
           {branches.map((branch) => (
             <Branch key={branch.id}>
-              <Image src={branch.logo} alt={branch.name} width={140} height={140} unoptimized />
+              <Image src={branch.file} alt={branch.name} width={140} height={140} unoptimized />
             </Branch>
           ))}
         </BranchesBox>
         <ImageBox>
-          {images.map((image) => (
+          {banners.map((image) => (
             <OfferCard key={image.id} bg={image.color}>
               <Content>
                 <TitleStyled>{image.title}</TitleStyled>
-                <Description>{image.description}</Description>
+                <Description>{image.subtitle}</Description>
                 {/* <ShopButton>
                   Shop now <ArrowRight />
                 </ShopButton> */}
               </Content>
               <StyledImage
-                src={image.url}
+                src={image.file}
                 alt={image.title}
                 width={image.isXl ? 350 : 150}
                 height={image.isXl ? 350 : 150}

@@ -58,9 +58,9 @@ const Header = () => {
               <NavLink href="/" className="active">
                 Home
               </NavLink>
-              <NavLink href="/shop">Shop</NavLink>
-              <NavLink href="/blog">Blog</NavLink>
-              <NavLink href="/contact">Contact</NavLink>
+              <NavLink href="/#top">Top</NavLink>
+              <NavLink href="/#brands">Marcas</NavLink>
+              <NavLink href="/#categories">Categorias</NavLink>
 
               {/* <InfoGroup>
                 <IconButton>

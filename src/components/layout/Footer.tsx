@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
 import React from 'react';
 import styled from 'styled-components';
 import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 const FooterWrapper = styled.footer`
   background-color: ${({ theme }) => theme.colors.grey[900]};
@@ -33,12 +33,13 @@ const Grid = styled.div`
 const ContactInfo = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 1rem;
 `;
 
 const Logo = styled.img`
-  height: 2.5rem;
-  margin-bottom: 1.5rem;
+  height: 3.5rem;
+  margin-bottom: .5rem;
 `;
 
 const InfoItem = styled.div`
@@ -59,7 +60,7 @@ const FooterSection = styled.div`
   }
 `;
 
-const FooterLinks = styled.ul`
+/* const FooterLinks = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -72,7 +73,7 @@ const FooterLink = styled(Link)`
   &:hover {
     color: ${({ theme }) => theme.colors.secondary.main};
   }
-`;
+`; */
 
 const NewsletterForm = styled.form`
   margin: 1rem 0;
@@ -154,7 +155,7 @@ const Footer = () => {
       <Container>
         <Grid>
           <ContactInfo>
-            <Logo src="/api/placeholder/150/50" alt="Autosoe Logo" />
+            <Logo src={'/images/logo.svg'} alt="Logo" />
             <InfoItem>
               <Phone size={20} />
               <span>+1(800) 123 456</span>
@@ -170,23 +171,39 @@ const Footer = () => {
           </ContactInfo>
 
           <FooterSection>
-            <h3>Quick Links</h3>
+            {/* <h3>Quick Links</h3>
             <FooterLinks>
-              <li><FooterLink href="/about">About Us</FooterLink></li>
-              <li><FooterLink href="/contact">Contact</FooterLink></li>
-              <li><FooterLink href="/shop">Shop</FooterLink></li>
-              <li><FooterLink href="/login">Login</FooterLink></li>
-            </FooterLinks>
+              <li>
+                <FooterLink href="/about">About Us</FooterLink>
+              </li>
+              <li>
+                <FooterLink href="/contact">Contact</FooterLink>
+              </li>
+              <li>
+                <FooterLink href="/shop">Shop</FooterLink>
+              </li>
+              <li>
+                <FooterLink href="/login">Login</FooterLink>
+              </li>
+            </FooterLinks> */}
           </FooterSection>
 
           <FooterSection>
-            <h3>Customer Service</h3>
+          {/*   <h3>Customer Service</h3>
             <FooterLinks>
-              <li><FooterLink href="/shipping">Shipping Policy</FooterLink></li>
-              <li><FooterLink href="/returns">Returns & Exchanges</FooterLink></li>
-              <li><FooterLink href="/faq">FAQs</FooterLink></li>
-              <li><FooterLink href="/terms">Terms & Conditions</FooterLink></li>
-            </FooterLinks>
+              <li>
+                <FooterLink href="/shipping">Shipping Policy</FooterLink>
+              </li>
+              <li>
+                <FooterLink href="/returns">Returns & Exchanges</FooterLink>
+              </li>
+              <li>
+                <FooterLink href="/faq">FAQs</FooterLink>
+              </li>
+              <li>
+                <FooterLink href="/terms">Terms & Conditions</FooterLink>
+              </li>
+            </FooterLinks> */}
           </FooterSection>
 
           <FooterSection>
@@ -199,10 +216,18 @@ const Footer = () => {
               </InputWrapper>
             </NewsletterForm>
             <SocialLinks>
-              <a href="#"><Facebook size={24} /></a>
-              <a href="#"><Twitter size={24} /></a>
-              <a href="#"><Instagram size={24} /></a>
-              <a href="#"><Youtube size={24} /></a>
+              <a href="#">
+                <Facebook size={24} />
+              </a>
+              <a href="#">
+                <Twitter size={24} />
+              </a>
+              <a href="#">
+                <Instagram size={24} />
+              </a>
+              <a href="#">
+                <Youtube size={24} />
+              </a>
             </SocialLinks>
           </FooterSection>
         </Grid>
@@ -210,12 +235,12 @@ const Footer = () => {
 
       <BottomBar>
         <BottomContent>
-          <p>&copy; 2024 Autosoe. All rights reserved.</p>
+          <p>&copy; 2025 CRDiesel. All rights reserved.</p>
           <PaymentMethods>
+           {/*  <img src="/api/placeholder/50/30" alt="Payment Method" />
             <img src="/api/placeholder/50/30" alt="Payment Method" />
             <img src="/api/placeholder/50/30" alt="Payment Method" />
-            <img src="/api/placeholder/50/30" alt="Payment Method" />
-            <img src="/api/placeholder/50/30" alt="Payment Method" />
+            <img src="/api/placeholder/50/30" alt="Payment Method" /> */}
           </PaymentMethods>
         </BottomContent>
       </BottomBar>
