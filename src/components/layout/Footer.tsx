@@ -158,15 +158,15 @@ const Footer = () => {
             <Logo src={'/images/logo.svg'} alt="Logo" />
             <InfoItem>
               <Phone size={20} />
-              <span>+1(800) 123 456</span>
+              <span>2221258944</span>
             </InfoItem>
             <InfoItem>
               <Mail size={20} />
-              <span>info@autosoe.com</span>
+              <span>ventas@crdiesel.com.mx</span>
             </InfoItem>
             <InfoItem>
               <MapPin size={20} />
-              <span>123 Main Street, New York, NY 10001</span>
+              <span>México 150, Vista Hermosa, 75200 Tepeaca, Pue.</span>
             </InfoItem>
           </ContactInfo>
 
