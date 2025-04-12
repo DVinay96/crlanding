@@ -207,12 +207,12 @@ const Footer = () => {
           </FooterSection>
 
           <FooterSection>
-            <h3>Newsletter</h3>
-            <p>Subscribe to our newsletter and get 10% off your first purchase</p>
+            <h3>Suscripción</h3>
+            <p>Registra tu correo electrónico y obten promociones exclusivas</p>
             <NewsletterForm>
               <InputWrapper>
                 <Input type="email" placeholder="Your email" />
-                <Button type="submit">Subscribe</Button>
+                <Button type="submit">Suscríbete</Button>
               </InputWrapper>
             </NewsletterForm>
             <SocialLinks>
