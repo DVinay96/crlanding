@@ -18,12 +18,12 @@ const Header = () => {
               <InfoItem>
                 <Phone size={16} />
                 <span>
-                  Talk to the experts. Call us <Blue>+1(800) 123 456</Blue>
+                  Llámanos <Blue>2221258944</Blue>
                 </span>
               </InfoItem>
               <InfoItem>
                 <Clock size={16} />
-                <span>Opening hour: 8am - 10pm</span>
+                <span>Horario: 10am - 6pm</span>
               </InfoItem>
             </InfoGroup>
           </TopBarContent>
